@@ -135,7 +135,7 @@
                                            <!-- <p> -->
                                             <pre>from flask import Flask,request,render_template_string <br>from urllib import unquote<br>app = Flask(__name__)<br>@app.route("/")<br>def hello():<br>    return "python template injection"<br>@app.errorhandler(404) <br>def page_not_found(error): <br>    url = unquote(request.url) <br>    return render_template_string("&lth1&gtURL %s not found&lt/h1&gt&ltbr/&gt"%url), 404 <br>if __name__ == '__main__': <br>    app.run(debug=False, host='0.0.0.0') </pre>
                                            <!-- </p> -->
-										   <a class"text-center btn btn-light" href="ssti/server.py">Download Source Code</a>
+										   <a class"m-3" href="ssti/server.py">Download Source Code</a>
                                            <p>
                                               when <kbd>page_not_found(error)</kbd> function calls get url parameter  is directely rendered with the error template , 
                                               So Hackers can Render Their own payloads . 
