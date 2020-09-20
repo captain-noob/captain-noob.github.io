@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSTI(ServerSide Template Injection)</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="primary-nav">
+        <button href="#" class="hamburger open-panel nav-toggle">
+            <span class="screen-reader-text">Menu</span>
+        </button>
+        <nav role="navigation" class="menu" style="height: 900px;">
+            <a href="#" class="logotype">captain<span>-noob</span></a>
+            <div class="overflow-container">
+                <ul class="menu-dropdown">
+                    <li><a href="../index.html">Home</a><span class="icon"><i class="fa fa-home"></i></span></li>
+                    <li class="menu-hasdropdown">
+                        <a href="#">Pages</a><span class="icon"><i class="fa fa-paper-plane"></i></span>
+                        <label title="toggle menu" for="settings">
+                            <span class="downarrow"><i class="fa fa-caret-down"></i></span>
+                        </label>
+                        <input type="checkbox" class="sub-menu-checkbox" id="settings" />
+                        <ul class="sub-menu-dropdown">
+                            <li><a href="">Page1</a></li>
+                            <li><a href="">page2</a></li>
+                            <li><a href="">page3</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Portfolio</a><span class="icon"><i class="fa fa-heart"></i></span></li>
+                    <li><a href="#">Contact</a><span class="icon"><i class="fa fa-envelope"></i></span></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    
+    <div class="new-wrapper">
+        <div id="main">
+            <h1 class="ml-5 pt-3">Pages</h1>
+            <div id="main-contents">
+                <div id="content" class="col-12">
+                    <div class="row">
+                        <hr>
+                        <!-- main content  -->
+                        <div class="col-md-8 col-lg-8 col-xl-8">
+                            <!-- <div class="container"> -->
+                                <div class="row">
+
+                                    <!-- //content begins  -->
+                                    
+                                  <div class="col-12 overflow-auto container-fluid" style="height:800px;position: relative;">
+                                    <div class="card">
+                                        <!-- //image  -->
+                                      <img class="card-img" style="height: 400px;"
+                                        src="https://www.we45.com/hubfs/SSTI_Injection_ArticleImage-1.jpg"
+                                        alt="Bologna">
+                                        <!-- image end  -->
+                                      <div class="card-img-overlay">
+                                            <!-- //catogary -->
+                                            <a href="#" class="btn btn-light btn-sm">SSTI(ServerSide Template Injection),    CTF</a>
+                                            <!-- //catogary end -->
+                                      </div>
+                                      <div class="none"></div>
+                                      <div class="card-body">
+                                          <!-- title  -->
+                                        <h2 class="card-title text-center" style="color: rgb(29, 28, 28);">Server-Side Template Injection</h2>
+                                        <div class="views text-center col-12 mt-3">Oct 20, 12:45PM</div> 
+                                        <!-- title ends  -->
+                                        <!-- descrip -->
+                                        <div class="card-text mt-5 position-relative">
+                                            <p>On last day When i was Playing CTF games , i fount one intersting vulnerblity called serverside template injection(SSTI)</p>
+                                            <p>Now a days Template engines are widely used by web applications to display dynamic data via web pages .Unsafely embedding of user 
+                                                input to templates enables Server-Side Template Injection, Template Injection May cause with Client side XSS or Leads to critical 
+                                                Remote Code Execution(RCE)</p>
+                                            <p>
+                                                Here, In that CTF ,Template injection leads to RCE to obtain flag . This is not a Walkthrough of that CTF .
+                                                Its Just a note or Explanation for, how the Template Injection Works , and How i Gains access to the server. 
+                                            </p>
+                                            <p>
+                                                When I started the server, one simple webpage loads. 
+                                                After my simple enumeration using burp-suite response header told me,this web app using Werkzeug,
+                                                 (It's a Python based WSGI web application library). 
+                                                Then I started enumerate directory or possible URLs, 
+                                                On that time I noticed what ever I submitted in the URL it gets reflects on the webpage.
+                                            </p>
+                                            <div class="container-fluid p-3 border-dark">
+                                                <img src="ssti/2020-09-12_00-09.png" class="img-fluid" srcset="">
+                                            </div>
+                                            <p>
+                                                Werkzeug is also a Template based Engines, 
+                                                So I want to confirm Template Injection in this web app, 
+                                                for that I entered this simple calculation payload <kbd>{{ 2 * 7 }}</kbd>, 
+                                                if its displays 14 then the template injection possible .
+                                            </p>
+                                            
+                                            <div class="container-fluid p-3 border-dark">
+                                                <img src="ssti/2020-09-12_00-11.png" class="img-fluid" srcset="">
+                                            </div>
+                                            <p>
+                                                Then our attempt is success ,so I want to execute Codes Remotely.
+                                                 Before RCE,I used to read the '/etc/passwd' in that server. For that I used the payload 
+                                                 <kbd>
+                                                    {{‘’.__class__.__mro__[2].__subclasses__()[40](‘/etc/passwd’).read()}} 
+                                                 </kbd><br>
+                                                There are many another payloads to read the files use reference from
+                                                <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Server%20Side%20Template%20Injection">swisskyrepo</a>
+                                            </p>
+                                            <div class="container-fluid p-5 border-dark">
+                                                <div class="row">
+                                                    <img src="ssti/2020-09-12_00-25.png" class="col-md-6 col-sm-12 col-6" srcset="">
+                                                    <img src="ssti/2020-09-12_00-26.png" class="col-md-6 col-sm-12 col-6" srcset="">
+                                                </div>
+                                            </div>
+                                            <p>
+                                                Finally to my favorite part Code execution, 
+                                                In this server RCE is pretty simple.
+                                                When I executed the 
+                                                <kbd>{{‘’.__class__.__mro__[2].__subclasses__()[396]('id',shell=True,stdout=-1).communicate()[0].strip()}}</kbd>
+                                            </p>
+
+
+                                            <p>
+                                                There may be several methods to execute SSTI(Server side Template Injection), 
+                                                Template Injection is Possible With every 
+                                                Template Based Web Application (Not only in Python In Other languages too)
+                                            </p>
+
+                                            <h4>
+                                                Source Code Explanation
+                                            </h4>
+                                           <!-- <p> -->
+                                            <pre>from flask import Flask,request,render_template_string <br>from urllib import unquote<br>app = Flask(__name__)<br>@app.route("/")<br>def hello():<br>    return "python template injection"<br>@app.errorhandler(404) <br>def page_not_found(error): <br>    url = unquote(request.url) <br>    return render_template_string("&lth1&gtURL %s not found&lt/h1&gt&ltbr/&gt"%url), 404 <br>if __name__ == '__main__': <br>    app.run(debug=False, host='0.0.0.0') </pre>
+                                           <!-- </p> -->
+                                           <p>
+                                              when <kbd>page_not_found(error)</kbd> function calls get url parameter  is directely rendered with the error template , 
+                                              So Hackers can Render Their own payloads . 
+                                              This Leads To XSS(Cross Site Injection ) or RCE(Remote Code Execution)
+                                           </p>
+                                            
+
+                                            <h4>
+                                                Remediation
+                                            </h4>
+                                            <p>
+                                                For securing From this kind of attack validate all the user controlled areas , Like urls, User Inputs etc...
+                                            </p>
+
+                                        </div>
+                                        <!-- descrip -->
+                                        <!-- <a href="#sss" style="position: absolute;"><button class=" float-right mt-2 btn btn-info">Read More </button></a> -->
+                                      </div>
+                                      <div class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
+                                          <!-- time  -->
+                                        <!-- <div class="views text-center col-12 mt-3">Oct 20, 12:45PM</div>  -->
+                                        <!-- time  -->
+                                      </div>
+                                    </div>
+                                  </div>
+
+
+                                  <!-- content ends here  -->
+                                </div>
+                              <!-- </div> -->
+                            <div class="m-auto">
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="col-md-4  col-lg-4 col-xl-4 ">
+
+                            <div class="border-left pl-4">
+                                <!-- author -->
+                                <div class="mb-5">
+
+                                    <h5>Author</h5>
+                                    <div class="justify-content-center">
+                                        <!-- //auther card  -->
+                                        <!-- <center> -->
+                                            <div class="auth col-12 p-4">
+                                                <div class="image">
+                                                    <img class=""
+                                                        src="https://avatars1.githubusercontent.com/u/56505395?s=460&u=f366affe6ab1dbac50745b0856a464132de1344c&v=4"
+                                                        alt="" srcset="">
+                                                </div>
+                                                <h2 class="mt-2 pb-1">Roshan Cheriyan<br></h2>
+                                                <h2 ><span class="p-2">Penetration Tester & Developer</span></h2>
+                                                <p>An Independent Developer and Security researcher</p>
+                                                <span class="pt-2">
+                                                    <ul>
+                                                        <li><a  href="https://www.facebook.com/roshan.cheriyan.9"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                                        <li><a href="https://twitter.com/captain__noob"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                                        <!-- <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li> -->
+                                                        <!-- <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li> -->
+                                                        <li><a href="https://www.instagram.com/__captain__noob/"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                                    </ul>
+                                                </span>
+                                            </div>
+                                        <!-- </center> -->
+                                        <!-- end  -->
+                                    </div>
+                                    <!-- author end  -->
+                                    <!-- tag -->
+                                    
+                                    <div class="mb-5 mt-4 col-12">
+                                        <h5>Tags</h5>
+                                        <div class="tagcloud">
+                                            <a href="#" class="tag-cloud-link"> <i class="fa fa-tag" aria-hidden="true"></i> CTF</a>
+                                            <a href="#" class="tag-cloud-link"> <i class="fa fa-tag" aria-hidden="true"></i> Pentester</a>
+                                            <a href="#" class="tag-cloud-link"> <i class="fa fa-tag" aria-hidden="true"></i> Bug Bounty</a>
+                                            <a href="#" class="tag-cloud-link"> <i class="fa fa-tag" aria-hidden="true"></i> HTB</a>
+                                            <a href="#" class="tag-cloud-link"> <i class="fa fa-tag" aria-hidden="true"></i> Wirtups</a>
+                                            <a href="#" class="tag-cloud-link"> <i class="fa fa-tag"  aria-hidden="true"></i> Reverseing</a>
+                                            <a href="#" class="tag-cloud-link"> <i class="fa fa-tag"  aria-hidden="true"></i> Attack And Defence</a>
+                                            <a href="#" class="tag-cloud-link"> <i class="fa fa-tag"  aria-hidden="true"></i> WebApps</a>
+                                            <a href="#" class="tag-cloud-link"> <i class="fa fa-tag"  aria-hidden="true"></i> Applications</a>
+                                            <a href="#" class="tag-cloud-link"> <i class="fa fa-tag"  aria-hidden="true"></i> Security</a>
+                                        </div>
+                                        <!-- tag end  -->
+                                    </div>
+                                </div>
+
+                                <!-- main content end  -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="../script.js"></script>
+</body>
+</html>
