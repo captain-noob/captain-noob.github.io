@@ -135,13 +135,15 @@
                                            <!-- <p> -->
                                             <pre>from flask import Flask,request,render_template_string <br>from urllib import unquote<br>app = Flask(__name__)<br>@app.route("/")<br>def hello():<br>    return "python template injection"<br>@app.errorhandler(404) <br>def page_not_found(error): <br>    url = unquote(request.url) <br>    return render_template_string("&lth1&gtURL %s not found&lt/h1&gt&ltbr/&gt"%url), 404 <br>if __name__ == '__main__': <br>    app.run(debug=False, host='0.0.0.0') </pre>
                                            <!-- </p> -->
-					   <div class="p-3 text-center">
-						<a class"" href="ssti/server.py"><span class="btn btn-light">Download Code</span></a>
-					   </div>
+											<div class="p-3 text-center">
+												<a class"" href="ssti/server.py"><span class="btn btn-light">Download Code</span></a>
+											</div>
                                            <p>
-                                              when <kbd>page_not_found(error)</kbd> function calls get url parameter  is directely rendered with the error template , 
-                                              So Hackers can Render Their own payloads . 
-                                              This Leads To XSS(Cross Site Injection ) or RCE(Remote Code Execution)
+                                              when <kbd>page_not_found(error):</kbd> function execute , The url parameter (<kbd>unquote(request.url)</kbd>) 
+											  is directely Stored to a variable <kbd>url</kbd> , This Variable directely rendered with the error template ,
+											  So what ever user entered on URL, That will Reflect on that Templates.
+                                              So we Utilize this loophole to execute our payload ,That will Render on That Page . 
+                                              This Leads To XSS(Cross Site Injection ) or RCE ( Remote Code Execution )
                                            </p>
                                             
 
@@ -150,6 +152,7 @@
                                             </h4>
                                             <p>
                                                 For securing From this kind of attack validate all the user controlled areas , Like urls, User Inputs etc...
+												Dont Displays User Inputs Directly to the Template
                                             </p>
 
                                         </div>
