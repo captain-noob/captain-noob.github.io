@@ -68,41 +68,41 @@
                                       <div class="card-body">
                                           <!-- title  -->
                                         <h2 class="card-title text-center" style="color: rgb(29, 28, 28);">Server-Side Template Injection</h2>
-                                        <div class="views text-center col-12 mt-3">Oct 20, 12:45PM</div> 
+                                        <div class="views text-center col-12 mt-3">20 Sept 2020, 12:00 AM</div> 
                                         <!-- title ends  -->
                                         <!-- descrip -->
                                         <div class="card-text mt-5 position-relative">
-                                            <p>On last day ,When i was Playing CTF games , I  play with one intersting vulnerblity , serverside template injection (SSTI)</p>
-                                            <p>Now a days Template engines are widely used by web applications to display dynamic data via web pages .Unsafely embedding of user 
-                                                input to templates enables Server-Side Template Injection, Template Injection May cause with Client side XSS or Leads to critical 
+                                            <p>On last day, When i was Playing CTF games, I  played with one intersting vulnerability, Server-Side Template Injection (SSTI)</p>
+                                            <p>Now a days Template engines are widely used by web applications to display dynamic data via web pages. Unsafely embedding of user 
+                                                input to templates enables Server-Side Template Injection, Template Injection may cause with client side XSS or leads to critical 
                                                 Remote Code Execution(RCE)</p>
                                             <p>
-                                                Here, In that CTF ,Template injection leads to RCE to obtain flag . This is not a Walkthrough of that CTF .
-                                                Its Just a note or Explanation for, how the Template Injection Works , and How i Gains access to the server. 
+                                                Here, In that CTF ,Template injection leads to RCE to obtain flag. This is not a walkthrough of that CTF. 
+                                                Its just a note or explanation for, how the Template Injection works, and how i gains access to that server. 
                                             </p>
                                             <p>
-                                                When I started the server, one simple webpage loads. 
-                                                After my simple enumeration using burp-suite response header told me,this web app using Werkzeug,
+                                                When i started the server, One simple webpage loads. 
+                                                After my simple enumeration using burp-suite response header told me, this web app using Werkzeug
                                                  (It's a Python based WSGI web application library). 
-                                                Then I started enumerate directory or possible URLs, 
-                                                On that time I noticed what ever I submitted in the URL it gets reflects on the webpage.
+                                                Then i started enumerate directory or possible URLs,  
+                                                On that time i noticed what ever i submitted in the URL it gets reflects on that webpage.
                                             </p>
                                             <div class="container-fluid p-3 border-dark">
                                                 <img src="ssti/2020-09-12_00-09.png" class="img-fluid" srcset="">
                                             </div>
                                             <p>
-                                                Werkzeug is also a Template based Engines, 
-                                                So I want to confirm Template Injection in this web app, 
-                                                for that I entered this simple calculation payload <kbd>{{ 2 * 7 }}</kbd>, 
-                                                if its displays 14 then the template injection possible .
+                                                Werkzeug is also a template based engines, 
+                                                So i want to confirm Template Injection in this web app, 
+                                                for that i entered this simple calculation payload <kbd>{{ 2 * 7 }}</kbd>, 
+                                                If its displays 14 then the template injection possible.
                                             </p>
                                             
                                             <div class="container-fluid p-3 border-dark">
                                                 <img src="ssti/2020-09-12_00-11.png" class="img-fluid" srcset="">
                                             </div>
                                             <p>
-                                                Then our attempt is success ,so I want to execute Codes Remotely.
-                                                 Before RCE,I used to read the '/etc/passwd' in that server. For that I used the payload 
+                                                Then our attempt is success ,so i want to execute codes remotely.
+                                                 Before RCE,I used to read the '/etc/passwd' in that server. For that i used the payload 
                                                  <kbd>
                                                     {{‘’.__class__.__mro__[2].__subclasses__()[40](‘/etc/passwd’).read()}} 
                                                  </kbd><br>
@@ -118,15 +118,15 @@
                                             <p>
                                                 Finally to my favorite part Code execution, 
                                                 In this server RCE is pretty simple.
-                                                When I executed the 
+                                                When i executed the 
                                                 <kbd>{{‘’.__class__.__mro__[2].__subclasses__()[396]('id',shell=True,stdout=-1).communicate()[0].strip()}}</kbd>
                                             </p>
 
 
                                             <p>
                                                 There may be several methods to execute SSTI(Server side Template Injection), 
-                                                Template Injection is Possible With every 
-                                                Template Based Web Application (Not only in Python In Other languages too)
+                                                Template Injection is possible With every 
+                                                template based web application (Not only in Python In Other languages too)
                                             </p>
 
                                             <h4>
@@ -139,10 +139,10 @@
 												<a class"" href="ssti/server.py"><span class="btn btn-light">Download Code</span></a>
 											</div>
                                            <p>
-                                              when <kbd>page_not_found(error):</kbd> function execute , The url parameter (<kbd>unquote(request.url)</kbd>) 
-											  is directely Stored to a variable <kbd>url</kbd> , This Variable directely rendered with the error template ,
-											  So what ever user entered on URL, That will Reflect on that Templates.
-                                              So we Utilize this loophole to execute our payload ,That will Render on That Page . 
+                                              When <kbd>page_not_found(error):</kbd> function execute, The url parameter (<kbd>unquote(request.url)</kbd>) 
+											  is directely Stored to a variable <kbd>url</kbd>, This variable directely rendered with the error template,
+											  So what ever user entered on URL, That will reflect on that templates.
+                                              So we utilize this loophole to execute our payload, That will render on that page. 
                                               This Leads To XSS(Cross Site Injection ) or RCE ( Remote Code Execution )
                                            </p>
                                             
@@ -151,8 +151,8 @@
                                                 Remediation
                                             </h4>
                                             <p>
-                                                For securing From this kind of attack validate all the user controlled areas , Like urls, User Inputs etc...
-												Dont Displays User Inputs Directly to the Template
+                                                For securing from this kind of attack validate all the user controlled areas, Like urls, User Inputs etc...
+												Dont Displays User Inputs Directly to the Template.
                                             </p>
 
                                         </div>
