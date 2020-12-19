@@ -7,7 +7,6 @@ $('.nav-toggle').click(function (e) {
 });
 
 
-//codepen
 $(document).ready(function($) {
 
 	$('.card__share > a').on('click', function(e){ 
